@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <script> document.documentElement.className += ' js'</script>
+  <link rel="stylesheet" href="./css/style.css">
+  <title>LOCALIZA CEP</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>LOCALIZA - <span>CEP</span></h1>
+
+    <div class="entradas">
+      <input class="entradaCEP" id="entrada" type="number" autocomplete="off">
+      <img id="btn" src="./img/search (1).png" alt="">
+    </div>
+
+    <div class="resultado-container">
+      <div class="resultado js-scroll">
+        <p class="codigoPostal js-scroll"></p>
+        <p class="bairro js-scroll"></p>
+        <p class="logradouro js-scroll"> </p>
+        <p class="localidade js-scroll"></p>
+        <p class="erro"></p>
+        <a class="link" href="">
+          <p class="link js-scroll"><span>Visualizar no Maps ➝</span></p>
+        </a>
+      </div>
+
+      <div class="mapa js-scroll">
+        <a class="link" href="">
+          <img src="./img/mapa.png" alt="" target='_blank'>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="./js/script.js"></script>
+</body>
+
+</html>
