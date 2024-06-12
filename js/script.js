@@ -5,15 +5,19 @@ const bairro = document.querySelector(".bairro");
 const logradouro = document.querySelector(".logradouro");
 const localidade = document.querySelector(".localidade");
 const erro = document.querySelector(".erro");
+const inexistente = document.querySelector(".inexistente");
 
 btn.addEventListener("click", () => {
   const CEP = entrada.value;
+  erro.style.display = "none";
+
   if (CEP.length === 8) {
     displayNone();
     buscadorCep(CEP);
     linkMaps(CEP);
   } else {
-    alert("Digite CEP com 8 dígitos sem pontos ou traços.");
+    limpaJson();
+    erroContainer();
   }
 });
 
@@ -28,15 +32,13 @@ async function buscadorCep(CEP) {
   const jsonDados = await responseDados.json();
 
   if (jsonDados.erro === true) {
-    erro.innerText = "CEP inexistente";
+    inexistente.innerText = "CEP inexistente";
 
-    const elementosJson = [codigoPostal, bairro, logradouro, localidade];
-    elementosJson.forEach((elemento) => (elemento.innerText = ""));
-
+    limpaJson();
     removeTargetBlank();
     ativarGrid();
   } else {
-    erro.innerText = "";
+    inexistente.innerText = "";
     codigoPostal.innerText = jsonDados.cep;
     bairro.innerText = jsonDados.bairro;
     logradouro.innerText = jsonDados.logradouro;
@@ -53,6 +55,25 @@ function linkMaps(CEP) {
   });
 }
 
+function limpaJson() {
+  const elementosJson = [codigoPostal, bairro, logradouro, localidade];
+  elementosJson.forEach((elemento) => (elemento.innerText = ""));
+}
+
+function erroContainer() {
+  inexistente.style.display = "none";
+  erro.innerText = "Digite um CEP com 8 dígitos sem pontos ou traços.";
+  document
+    .querySelectorAll(".resultado, .erro, .resultado-container")
+    .forEach((item) => (item.style.display = "grid"));
+
+  document.querySelector(".resultado-container").style.gridTemplateColumns =
+    "1fr";
+
+  document.querySelector(".link").style.display = "none";
+  document.querySelector(".mapa").style.display = "none";
+}
+
 function removeTargetBlank() {
   document.querySelectorAll(".link").forEach((item) => {
     (item.href = "#"), (item.target = "");
@@ -61,10 +82,14 @@ function removeTargetBlank() {
 
 function ativarGrid() {
   document
-    .querySelectorAll(".mapa, .resultado, .resultado-container")
+    .querySelectorAll(".mapa, .resultado, .resultado-container, .inexistente")
     .forEach((classes) => {
       classes.style.display = "grid";
     });
+
+  document.querySelector(".resultado-container").style.gridTemplateColumns =
+    "1fr 1fr";
+  document.querySelector(".link").style.display = "grid";
 }
 
 function animacao() {
