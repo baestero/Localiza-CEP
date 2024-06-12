@@ -8,56 +8,70 @@ const erro = document.querySelector(".erro");
 
 btn.addEventListener("click", () => {
   const CEP = entrada.value;
-
   if (CEP.length === 8) {
+    displayNone();
     buscadorCep(CEP);
+    linkMaps(CEP);
   } else {
-    alert("Digite CEP com 8 dígitos");
+    alert("Digite CEP com 8 dígitos sem pontos ou traços.");
   }
 });
 
-function buscadorCep(CEP) {
-  document.querySelector(".resultado").style.display = "none";
-  document.querySelector(".mapa").style.display = "none";
+function displayNone() {
+  document
+    .querySelectorAll(".resultado, .mapa")
+    .forEach((item) => (item.style.display = "none"));
+}
 
+async function buscadorCep(CEP) {
+  const responseDados = await fetch(`https://viacep.com.br/ws/${CEP}/json/`);
+  const jsonDados = await responseDados.json();
+
+  if (jsonDados.erro === true) {
+    erro.innerText = "CEP inexistente";
+
+    const elementosJson = [codigoPostal, bairro, logradouro, localidade];
+    elementosJson.forEach((elemento) => (elemento.innerText = ""));
+
+    removeTargetBlank();
+    ativarGrid();
+  } else {
+    erro.innerText = "";
+    codigoPostal.innerText = jsonDados.cep;
+    bairro.innerText = jsonDados.bairro;
+    logradouro.innerText = jsonDados.logradouro;
+    localidade.innerText = jsonDados.localidade;
+
+    ativarGrid();
+  }
+}
+
+function linkMaps(CEP) {
   document.querySelectorAll(".link").forEach((item) => {
     item.href = `https://www.google.com.br/maps/place/${CEP}`;
+    item.target = "_blank";
   });
+}
 
-  fetch(`https://viacep.com.br/ws/${CEP}/json/`)
-    .then((r) => r.json())
-    .then((json) => {
-      if (json.erro === true) {
-        erro.innerText = "CEP inexistente";
-        codigoPostal.innerText = "";
-        bairro.innerText = "";
-        logradouro.innerText = "";
-        localidade.innerText = "";
+function removeTargetBlank() {
+  document.querySelectorAll(".link").forEach((item) => {
+    (item.href = "#"), (item.target = "");
+  });
+}
 
-        document.querySelectorAll(".link").forEach((item) => {
-          item.href = "#";
-          item.target = "";
-        });
-
-        document.querySelector(".mapa").style.display = "grid";
-        document.querySelector(".resultado").style.display = "grid";
-        document.querySelector(".resultado-container").style.display = "grid";
-      } else {
-        erro.innerText = "";
-        codigoPostal.innerText = json.cep;
-        bairro.innerText = json.bairro;
-        logradouro.innerText = json.logradouro;
-        localidade.innerText = json.localidade;
-
-        document.querySelector(".mapa").style.display = "grid";
-        document.querySelector(".resultado").style.display = "grid";
-        document.querySelector(".resultado-container").style.display = "grid";
-      }
+function ativarGrid() {
+  document
+    .querySelectorAll(".mapa, .resultado, .resultado-container")
+    .forEach((classes) => {
+      classes.style.display = "grid";
     });
 }
 
-const animacao = document.querySelectorAll(".js-scroll");
+function animacao() {
+  const animacao = document.querySelectorAll(".js-scroll");
+  animacao.forEach((item) => {
+    item.classList.add("animacao-ativo");
+  });
+}
 
-animacao.forEach((item) => {
-  item.classList.add("animacao-ativo");
-});
+animacao();
