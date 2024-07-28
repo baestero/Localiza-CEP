@@ -31,7 +31,7 @@ async function buscadorCep(CEP) {
   const responseDados = await fetch(`https://viacep.com.br/ws/${CEP}/json/`);
   const jsonDados = await responseDados.json();
 
-  if (jsonDados.erro === true) {
+  if (jsonDados.erro === "true") {
     inexistente.innerText = "CEP inexistente";
 
     limpaJson();
