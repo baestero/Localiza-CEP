@@ -14,7 +14,7 @@ Neste projeto você encontrará:
 ## 🔗 Acesse o Projeto
 
 **Visite o meu projeto:**
-[https://baestero.github.io/Localiza-CEP/](https://baestero.github.io/localiza-cep/)
+[https://baestero.github.io/Localiza-CEP/](https://baestero.github.io/Localiza-CEP/)
 
 ## 🖼 Preview
 
