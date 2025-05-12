@@ -21,7 +21,7 @@ Neste projeto você encontrará:
 Adicionei abaixo um preview do projeto para visualização rápida:
 **(substitua o link abaixo pela URL da imagem desejada)**
 
-![Preview do Projeto](./localiza-cep.png)
+![Preview do Projeto](https://github.com/baestero/Localiza-CEP/blob/main/localiza-cep.png)
 
 ## 🛠 Tecnologias Utilizadas
 
